@@ -8,7 +8,7 @@ function Navbar() {
       <span>
         {navLinks.map((link) => {
           return (
-            <li id={link.id} className="nav-link hf">
+            <li key={link.id} id={link.id} className="nav-link hf">
               <a href={link.link}>{link.title}</a>
             </li>
           );

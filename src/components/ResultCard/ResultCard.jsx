@@ -3,7 +3,7 @@ import "./resultcard.css";
 function ResultCard() {
   return (
     <div className="panel result-card">
-      <img src="" alt="" srcset="" />
+      <img src="" alt="" />
       <span id="description">
         <div id="header">
           <span className="active" id="details">
