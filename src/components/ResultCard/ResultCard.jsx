@@ -2,14 +2,16 @@ import "./resultcard.css";
 
 function ResultCard() {
   return (
-    <div className="panel result-card">
+    <div className="panel forty-five result-card">
       <img src="" alt="" />
       <span id="description">
         <div id="header">
           <span className="active" id="details">
             Details
           </span>
-          <span id="system">System Req.</span>
+          <span className="" id="system">
+            System Req.
+          </span>
         </div>
         <div id="section-container">
           <div id="details-panel">

@@ -3,9 +3,9 @@ import { ResultCard } from "./../../resources";
 
 function SearchPanel() {
   return (
-    <div id="search-panel" className="panel">
+    <div id="search-panel" className="panel thirty">
       <div id="search-console">
-        <span className="panel" id="search-options-panel">
+        <span className="panel seventy" id="search-options-panel">
           <div id="top">
             <input
               type="text"
@@ -30,11 +30,11 @@ function SearchPanel() {
             <input type="text" name="name" id="name-input" />
           </div>
         </span>
-        <span className="panel" id="search-btn-container">
+        <span className="panel seventy" id="search-btn-container">
           <div id="search-btn">SEARCH</div>
         </span>
       </div>
-      <div className="panel" id="results-panel">
+      <div className="panel ninety" id="results-panel">
         <ResultCard />
       </div>
     </div>

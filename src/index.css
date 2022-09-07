@@ -2,15 +2,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxanium&display=swap");
 
 :root {
-  --primary-color: #040114;
-  --secondary-color: #f7feff;
-  --accent-color: #42c3ff9c;
+  --primary-color: #1c1b4d;
+  --secondary-color: #b80e65;
+  --accent-color: #1791b1;
+  --font-color: rgb(224, 254, 255);
   --heading-font: "Big Shoulders Stencil Display";
   --body-font: "Oxanium";
 }
 
 * {
-  color: var(--secondary-color);
+  color: var(--font-color);
   padding: 0;
   margin: 0;
   text-decoration: none;
@@ -23,13 +24,43 @@
   align-items: center;
 }
 
-.panel {
+.panel.thirty {
   background-image: linear-gradient(
     30deg,
     rgba(255, 255, 255, 0.1),
     rgba(255, 255, 255, 0.2)
   );
-  border: 0.1px solid rgba(255, 255, 255, 0.1);
+  border: 0.1px solid rgba(23, 146, 177, 0.4);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+}
+.panel.forty-five {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2)
+  );
+  border: 0.1px solid rgba(23, 146, 177, 0.4);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+}
+.panel.seventy {
+  background-image: linear-gradient(
+    70deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2)
+  );
+  border: 0.5px solid rgba(23, 146, 177, 0.4);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+}
+.panel.ninety {
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2)
+  );
+  border: 0.1px solid rgba(23, 146, 177, 0.4);
   backdrop-filter: blur(5px);
   border-radius: 10px;
 }
@@ -64,7 +95,7 @@ input::placeholder {
 
 html {
   background-color: var(--primary-color);
-  background-image: url("https://cutewallpaper.org/26/artifical-intelligence-gif-wallpaper/artificial-intelligence-motion-by-faruqueeazam-on-dribbble.gif");
+  /*background-image: url("https://cutewallpaper.org/26/artifical-intelligence-gif-wallpaper/artificial-intelligence-motion-by-faruqueeazam-on-dribbble.gif");*/
   background-size: cover;
   background-clip: content-box;
 }
