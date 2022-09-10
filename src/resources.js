@@ -20,4 +20,6 @@ export const navLinks = [
   },
 ];
 
+export const API_URL = "http://localhost:1219";
+
 export { Navbar, SearchPanel, ResultCard };

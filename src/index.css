@@ -5,7 +5,7 @@
   --primary-color: #1c1b4d;
   --secondary-color: #b80e65;
   --accent-color: #1791b1;
-  --font-color: rgb(224, 254, 255);
+  --font-color: rgb(255, 255, 255);
   --heading-font: "Big Shoulders Stencil Display";
   --body-font: "Oxanium";
 }
@@ -22,6 +22,10 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+}
+
+.panel {
+  background-color: rgba(5, 4, 92, 0.39);
 }
 
 .panel.thirty {
@@ -67,16 +71,17 @@
 
 input {
   font: var(--body-font);
-  background-color: rgba(58, 255, 245, 0.1);
+  background-color: unset;
   outline: none;
   border: unset;
   border-bottom: 2px solid var(--accent-color);
   height: 1.5rem;
   border-radius: 0px 0px 0px 0px;
   padding: 0.2em;
+  text-align: center;
 }
 input::placeholder {
-  color: rgba(191, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.6);
   padding: 0.2em;
   text-align: center;
 }

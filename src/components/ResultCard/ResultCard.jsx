@@ -1,31 +1,54 @@
 import "./resultcard.css";
 
-function ResultCard() {
+function ResultCard({ name, dev, year, genres, cpu, gpu, memory, id }) {
+  const changeDescriptionPanel = (e) => {
+    const cardId = e.target.getAttribute("data-card-id");
+    const resultCard = document.getElementById(cardId);
+
+    const detailsHeader = resultCard.querySelector("#details-header");
+    const detailsPanel = resultCard.querySelector("#details-panel");
+    const systemHeader = resultCard.querySelector("#system-header");
+    const systemPanel = resultCard.querySelector("#system-panel");
+
+    detailsHeader.classList.toggle("active");
+    systemHeader.classList.toggle("active");
+    detailsPanel.classList.toggle("hidden");
+    systemPanel.classList.toggle("hidden");
+  };
+
   return (
-    <div className="panel forty-five result-card">
+    <div className="panel result-card" id={id}>
       <img src="" alt="" />
       <span id="description">
         <div id="header">
-          <span className="active" id="details">
+          <span
+            className="active"
+            id="details-header"
+            data-card-id={id}
+            onClick={changeDescriptionPanel}
+          >
             Details
           </span>
-          <span className="" id="system">
+          <span
+            className=""
+            id="system-header"
+            data-card-id={id}
+            onClick={changeDescriptionPanel}
+          >
             System Req.
           </span>
         </div>
         <div id="section-container">
           <div id="details-panel">
-            <li id="name">Name: Grand Theft Auto V</li>
-            <li id="dev">Developer: Rockstar Studio</li>
-            <li id="year">Year: 2012</li>
-            <li id="genres">Genres: Open-World RPG Simulation</li>
+            <li id="name">Name: {name}</li>
+            <li id="dev">Developer: {dev}</li>
+            <li id="year">Year: {year}</li>
+            <li id="genres">Genres: {genres.join(" / ")}</li>
           </div>
           <div className="hidden" id="system-panel">
-            <li id="cpu">Intel Core i5-6500</li>
-            <li id="gpu">GTX 1060</li>
-            <li id="memory">12 GB</li>
-            <li id="dx">2012</li>
-            <li id="vc">2012</li>
+            <li id="cpu">Processors: {cpu}</li>
+            <li id="gpu">Graphic Units: {gpu}</li>
+            <li id="memory">Memory: {memory}</li>
           </div>
         </div>
       </span>
