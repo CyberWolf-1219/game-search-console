@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar/Navbar";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import ResultCard from "./components/ResultCard/ResultCard";
+import SuggestionItem from "./components/SuggestionItem/SugesstionItem";
 
 export const navLinks = [
   {
@@ -22,4 +23,4 @@ export const navLinks = [
 
 export const API_URL = "http://localhost:1219";
 
-export { Navbar, SearchPanel, ResultCard };
+export { Navbar, SearchPanel, ResultCard, SuggestionItem };

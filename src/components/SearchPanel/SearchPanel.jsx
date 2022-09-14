@@ -1,5 +1,5 @@
 import "./search_panel.css";
-import { ResultCard, API_URL } from "./../../resources";
+import { ResultCard, API_URL, SuggestionItem } from "./../../resources";
 import { useState } from "react";
 
 function SearchPanel() {
@@ -8,7 +8,11 @@ function SearchPanel() {
   const [memory, setMemory] = useState("");
   const [name, setName] = useState("");
   const [games, setGames] = useState([]);
+  const [cpuSuggestions, setCpuSuggestions] = useState([]);
+  const [gpuSuggestions, setGpuSuggestions] = useState([]);
+  const [nameSuggestions, setNameSuggestions] = useState([]);
 
+  // SEARCH FUNCTION
   const search = () => {
     const data = {
       cpu: document.getElementById("cpu-input").value,
@@ -22,18 +26,67 @@ function SearchPanel() {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        response
-          .json()
-          .then((data) => {
-            setGames(data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        return response.json();
+      })
+      .then((data) => {
+        setGames(data);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  // AUTOSUGGESTION
+  const get_suggestions = (categoy, val) => {
+    const data = {
+      value: val,
+    };
+
+    fetch(API_URL + "/search/" + categoy, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        if (categoy === 'cpu') {
+          setCpuSuggestions(result);
+        } else if (categoy === 'gpu') {
+          setGpuSuggestions(result);
+        } else if (categoy === 'name') {
+          setNameSuggestions(result);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // SUGGESTION TRIGGER
+  const inputStateChange = (name, e) => {
+    const value = e.target.value;
+    if (name === "cpu") {
+      setCpu(e.target.value);
+      if (value !== "") {
+        get_suggestions("cpu", value);
+      } else {
+        setCpuSuggestions([]);
+      }
+    } else if (name === "gpu") {
+      setGpu(e.target.value);
+      if (value !== "") {
+        get_suggestions("gpu", value);
+      } else {
+        setGpuSuggestions([]);
+      }
+    } else if (name === "name") {
+      setName(e.target.value);
+      if (value !== "") {
+        get_suggestions("name", value);
+      } else {
+        setNameSuggestions([]);
+      }
+    }
   };
 
   return (
@@ -41,40 +94,68 @@ function SearchPanel() {
       <div id="search-console">
         <span className="panel seventy" id="search-options-panel">
           <div id="top">
-            <input
-              type="text"
-              name="cpu"
-              id="cpu-input"
-              placeholder="Ex: Core i5-6500"
-              onChange={(e) => setCpu(e.target.value)}
-              value={cpu}
-            />
-            <input
-              type="text"
-              name="gpu"
-              id="gpu-input"
-              placeholder="Ex: GTX 660"
-              onChange={(e) => setGpu(e.target.value)}
-              value={gpu}
-            />
-            <input
-              type="text"
-              name="memory"
-              id="memory-input"
-              placeholder="Ex: 12"
-              onChange={(e) => setMemory(e.target.value)}
-              value={memory}
-            />
+            <div className="input-wrapper cpu">
+              <input
+                type="text"
+                name="cpu"
+                id="cpu-input"
+                placeholder="Ex: i5-6500"
+                onChange={(e) => inputStateChange("cpu", e)}
+                onBlur={() => { setCpuSuggestions([]) }}
+                value={cpu}
+              />
+              <div className="suggestion-wrapper">
+                {cpuSuggestions.length !== 0 && cpuSuggestions.map((suggestion) => {
+                  return <SuggestionItem key={suggestion._id} value={suggestion.MODEL} />
+                })}
+              </div>
+            </div>
+
+            <div className="input-wrapper gpu">
+              <input
+                type="text"
+                name="gpu"
+                id="gpu-input"
+                placeholder="Ex: GTX 660"
+                onChange={(e) => inputStateChange("gpu", e)}
+                onBlur={() => { setGpuSuggestions([]) }}
+                value={gpu}
+              />
+              <div className="suggestion-wrapper">
+                {gpuSuggestions.length !== 0 && gpuSuggestions.map((suggestion) => {
+                  return <SuggestionItem key={suggestion._id} value={suggestion} />
+                })}
+              </div>
+            </div>
+
+            <div className="input-wrapper">
+              <input
+                type="text"
+                name="memory"
+                id="memory-input"
+                placeholder="Ex: 12"
+                onChange={(e) => setMemory(e.target.value)}
+                value={memory}
+              />
+            </div>
           </div>
           <div id="bottom">
-            <input
-              type="text"
-              name="name"
-              id="name-input"
-              placeholder="Metal Gear Solid V"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-            />
+            <div className="input-wrapper name">
+              <input
+                type="text"
+                name="name"
+                id="name-input"
+                placeholder="Metal Gear Solid V"
+                onChange={(e) => inputStateChange("name", e)}
+                onBlur={() => { setNameSuggestions([]) }}
+                value={name}
+              />
+              <div className="suggestion-wrapper">
+                {nameSuggestions.length !== 0 && nameSuggestions.map((suggestion) => {
+                  return <SuggestionItem key={suggestion._id} value={suggestion.name} />
+                })}
+              </div>
+            </div>
           </div>
         </span>
         <span className="panel seventy" id="search-btn-container">
