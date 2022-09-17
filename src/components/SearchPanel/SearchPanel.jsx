@@ -20,9 +20,9 @@ function SearchPanel() {
       memory: document.getElementById("memory-input").value,
       name: document.getElementById("name-input").value,
     };
-
     fetch(API_URL + "/search", {
       method: "POST",
+      headers: { 'Content-Type': "application/json" },
       body: JSON.stringify(data),
     })
       .then((response) => {
@@ -52,6 +52,7 @@ function SearchPanel() {
       })
       .then((result) => {
         if (categoy === 'cpu') {
+          console.log(result);
           setCpuSuggestions(result);
         } else if (categoy === 'gpu') {
           setGpuSuggestions(result);
@@ -66,21 +67,21 @@ function SearchPanel() {
   const inputStateChange = (name, e) => {
     const value = e.target.value;
     if (name === "cpu") {
-      setCpu(e.target.value);
+      setCpu(e.target.value.toUpperCase());
       if (value !== "") {
         get_suggestions("cpu", value);
       } else {
         setCpuSuggestions([]);
       }
     } else if (name === "gpu") {
-      setGpu(e.target.value);
+      setGpu(e.target.value.toUpperCase());
       if (value !== "") {
         get_suggestions("gpu", value);
       } else {
         setGpuSuggestions([]);
       }
     } else if (name === "name") {
-      setName(e.target.value);
+      setName(e.target.value.toUpperCase());
       if (value !== "") {
         get_suggestions("name", value);
       } else {
@@ -152,7 +153,7 @@ function SearchPanel() {
               />
               <div className="suggestion-wrapper">
                 {nameSuggestions.length !== 0 && nameSuggestions.map((suggestion) => {
-                  return <SuggestionItem key={suggestion._id} value={suggestion.name} />
+                  return <SuggestionItem key={suggestion._id} value={suggestion.DETAILS.NAME} />
                 })}
               </div>
             </div>
@@ -166,6 +167,7 @@ function SearchPanel() {
       </div>
       <div className="panel ninety" id="results-panel">
         {games.map((game) => {
+          console.log(game);
           return (
             <ResultCard
               key={game._id}
