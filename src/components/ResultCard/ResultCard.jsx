@@ -46,9 +46,9 @@ function ResultCard({ name, dev, year, genres, cpu, gpu, memory, id }) {
             <li id="genres">Genres: {genres.join(" / ")}</li>
           </div>
           <div className="hidden" id="system-panel">
-            <li id="cpu">Processors: {cpu}</li>
-            <li id="gpu">Graphic Units: {gpu}</li>
-            <li id="memory">Memory: {memory}</li>
+            <li id="cpu">Processors: {cpu.join(" / ")}</li>
+            <li id="gpu">Graphic Units: {gpu.join(" / ")}</li>
+            <li id="memory">Memory: {(memory / 1024).toString() + " GB"}</li>
           </div>
         </div>
       </span>

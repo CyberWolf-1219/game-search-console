@@ -3,14 +3,14 @@ import { ResultCard, API_URL, SuggestionItem } from "./../../resources";
 import { useState } from "react";
 
 function SearchPanel() {
-  const [cpu, setCpu] = useState("");
-  const [gpu, setGpu] = useState("");
-  const [memory, setMemory] = useState("");
-  const [name, setName] = useState("");
-  const [games, setGames] = useState([]);
-  const [cpuSuggestions, setCpuSuggestions] = useState([]);
-  const [gpuSuggestions, setGpuSuggestions] = useState([]);
-  const [nameSuggestions, setNameSuggestions] = useState([]);
+  const [ cpu, setCpu ] = useState("");
+  const [ gpu, setGpu ] = useState("");
+  const [ memory, setMemory ] = useState("");
+  const [ name, setName ] = useState("");
+  const [ games, setGames ] = useState([]);
+  const [ cpuSuggestions, setCpuSuggestions ] = useState([]);
+  const [ gpuSuggestions, setGpuSuggestions ] = useState([]);
+  const [ nameSuggestions, setNameSuggestions ] = useState([]);
 
   // SEARCH FUNCTION
   const search = () => {
@@ -52,7 +52,6 @@ function SearchPanel() {
       })
       .then((result) => {
         if (categoy === 'cpu') {
-          console.log(result);
           setCpuSuggestions(result);
         } else if (categoy === 'gpu') {
           setGpuSuggestions(result);
@@ -90,6 +89,23 @@ function SearchPanel() {
     }
   };
 
+  // SUGGESTION ITEM ONCLICK HANDLE
+  const cpuSuggestionClick = (value) => {
+    setCpu(value)
+    setCpuSuggestions([]);
+  }
+
+  const gpuSuggestionClick = (value) => {
+    setGpu(value)
+    setGpuSuggestions([]);
+  }
+
+  const nameSuggestionClick = (value) => {
+    setName(value)
+    setNameSuggestions([]);
+
+  }
+
   return (
     <div id="search-panel" className="panel thirty">
       <div id="search-console">
@@ -102,12 +118,12 @@ function SearchPanel() {
                 id="cpu-input"
                 placeholder="Ex: i5-6500"
                 onChange={(e) => inputStateChange("cpu", e)}
-                onBlur={() => { setCpuSuggestions([]) }}
+                // onBlur={() => { setCpuSuggestions([]) }}
                 value={cpu}
               />
               <div className="suggestion-wrapper">
                 {cpuSuggestions.length !== 0 && cpuSuggestions.map((suggestion) => {
-                  return <SuggestionItem key={suggestion._id} value={suggestion.MODEL} />
+                  return <SuggestionItem key={suggestion._id} value={suggestion.MODEL} clickHandle={cpuSuggestionClick} />
                 })}
               </div>
             </div>
@@ -119,12 +135,12 @@ function SearchPanel() {
                 id="gpu-input"
                 placeholder="Ex: GTX 660"
                 onChange={(e) => inputStateChange("gpu", e)}
-                onBlur={() => { setGpuSuggestions([]) }}
+                // onBlur={() => { setGpuSuggestions([]) }}
                 value={gpu}
               />
               <div className="suggestion-wrapper">
                 {gpuSuggestions.length !== 0 && gpuSuggestions.map((suggestion) => {
-                  return <SuggestionItem key={suggestion._id} value={suggestion} />
+                  return <SuggestionItem key={suggestion._id} value={suggestion.NAME} clickHandle={gpuSuggestionClick} />
                 })}
               </div>
             </div>
@@ -148,12 +164,12 @@ function SearchPanel() {
                 id="name-input"
                 placeholder="Metal Gear Solid V"
                 onChange={(e) => inputStateChange("name", e)}
-                onBlur={() => { setNameSuggestions([]) }}
+                // onBlur={() => { setNameSuggestions([]) }}
                 value={name}
               />
               <div className="suggestion-wrapper">
                 {nameSuggestions.length !== 0 && nameSuggestions.map((suggestion) => {
-                  return <SuggestionItem key={suggestion._id} value={suggestion.DETAILS.NAME} />
+                  return <SuggestionItem key={suggestion._id} value={suggestion.DETAILS.NAME} clickHandle={nameSuggestionClick} />
                 })}
               </div>
             </div>
@@ -166,22 +182,23 @@ function SearchPanel() {
         </span>
       </div>
       <div className="panel ninety" id="results-panel">
-        {games.map((game) => {
-          console.log(game);
-          return (
-            <ResultCard
-              key={game._id}
-              id={game._id}
-              name={game.DETAILS.NAME}
-              dev={game.DETAILS.DEVELOPER}
-              year={game.DETAILS.RELEASE_YEAR}
-              genres={game.DETAILS.GENRES}
-              cpu={game.SYSTEM_REQUIREMENTS.PROCESSOR}
-              gpu={game.SYSTEM_REQUIREMENTS.GRAPHICS}
-              memory={game.SYSTEM_REQUIREMENTS.MEMORY}
-            />
-          );
-        })}
+        {
+          games.map((game) => {
+            return (
+              <ResultCard
+                key={game._id}
+                id={game._id}
+                name={game.DETAILS.NAME}
+                dev={game.DETAILS.DEVELOPER}
+                year={game.DETAILS.RELEASE_YEAR}
+                genres={game.DETAILS.GENRES}
+                cpu={game.SYSTEM_REQUIREMENTS.PROCESSORS}
+                gpu={game.SYSTEM_REQUIREMENTS.GRAPHICS}
+                memory={game.SYSTEM_REQUIREMENTS.MEMORY}
+              />
+            );
+          })
+        }
       </div>
     </div>
   );
