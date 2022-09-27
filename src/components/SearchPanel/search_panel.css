@@ -1,9 +1,11 @@
 #search-panel {
   width: 80vw;
-  min-width: 600px;
-  max-width: 800px;
+  min-width: 900px;
+  max-width: 900px;
   margin-top: 50px;
   padding: 2em;
+  opacity: 0;
+  animation: fade-drop-in 1s 0.5s ease-in forwards;
 }
 
 #search-console {
@@ -73,6 +75,9 @@
 #search-btn-container {
   flex-grow: 1;
   padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #search-btn {
@@ -84,19 +89,59 @@
   width: 80px;
   height: 80px;
   background-image: radial-gradient(
-    rgba(0, 183, 255, 0.5),
+    rgba(103, 209, 255, 0.829),
     rgba(255, 255, 255, 0.5)
   );
   transition: 0.5s ease-in-out;
   cursor: pointer;
+  box-shadow: 0em 0em 0.05em 0.1em rgba(0, 255, 255, 0.65);
 }
 
 #search-btn:hover {
   transform: scale(1.1, 1.1);
+  background-image: radial-gradient(
+    rgba(255, 103, 103, 0.829),
+    rgba(255, 255, 255, 0.5)
+  );
+  box-shadow: 0em 0em 0.1em 0.2em rgba(255, 44, 44, 0.65);
+}
+
+#filter-container {
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-between;
+}
+
+#filter-container select {
+  padding: 1em 1em;
+  width: 10em;
+  cursor: pointer;
+  color: white;
+}
+
+#filter {
+  visibility: hidden;
+}
+
+#option-container::after {
+  content: "";
+  width: 1em;
 }
 
 #results-panel {
-  margin-top: 2em;
+  margin-top: 0.5em;
   min-height: 200px;
   padding: 2em 2em 1em 2em;
+  z-index: 1;
+}
+
+@keyframes fade-drop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 100;
+    transform: none;
+  }
 }

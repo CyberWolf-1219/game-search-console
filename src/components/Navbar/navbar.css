@@ -12,5 +12,8 @@ nav {
   list-style-type: none;
   display: inline;
   margin-left: 2em;
-  font-size: 28px;
+}
+
+.nav-link a {
+  font-size: 2rem;
 }

@@ -1,3 +1,7 @@
+* {
+  transition: all 0.5s;
+}
+
 .result-card {
   height: 200px;
   display: flex;
@@ -7,14 +11,20 @@
   gap: 1em;
   padding: 1em;
   margin-bottom: 1em;
+  opacity: 0;
+  animation: fade-drop-in 1s 0.5s forwards;
+  /* transition: all 1s; */
+}
+
+.result-card:hover {
+  transform: scale(1.1);
 }
 
 .result-card img {
   flex-grow: 1;
-  background-color: floralwhite;
+  background-color: rgb(218, 249, 253);
   height: 200px;
   min-width: 130px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .result-card #description {
@@ -68,4 +78,15 @@
   margin: 1em 0;
   margin-left: 1em;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes fade-drop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 100;
+    transform: none;
+  }
 }

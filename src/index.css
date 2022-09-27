@@ -4,7 +4,7 @@
 :root {
   --primary-color: #1c1b4d;
   --secondary-color: #b80e65;
-  --accent-color: #1791b1;
+  --accent-color: #0eb4dd;
   --font-color: rgb(255, 255, 255);
   --heading-font: "Big Shoulders Stencil Display";
   --body-font: "Oxanium";
@@ -15,6 +15,7 @@
   padding: 0;
   margin: 0;
   text-decoration: none;
+  font-size: 18px;
 }
 
 #root {
