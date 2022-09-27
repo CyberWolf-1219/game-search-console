@@ -19,10 +19,14 @@ function SearchPanel() {
       gpu: document.getElementById("gpu-input").value,
       memory: document.getElementById("memory-input").value,
       name: document.getElementById("name-input").value,
+      sorting: document.getElementById("sort").value
     };
+
+    setGames([]);
+
     fetch(API_URL + "/search", {
       method: "POST",
-      headers: { 'Content-Type': "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((response) => {
@@ -51,11 +55,11 @@ function SearchPanel() {
         return response.json();
       })
       .then((result) => {
-        if (categoy === 'cpu') {
+        if (categoy === "cpu") {
           setCpuSuggestions(result);
-        } else if (categoy === 'gpu') {
+        } else if (categoy === "gpu") {
           setGpuSuggestions(result);
-        } else if (categoy === 'name') {
+        } else if (categoy === "name") {
           setNameSuggestions(result);
         }
       })
@@ -91,19 +95,24 @@ function SearchPanel() {
 
   // SUGGESTION ITEM ONCLICK HANDLE
   const cpuSuggestionClick = (value) => {
-    setCpu(value)
+    setCpu(value);
     setCpuSuggestions([]);
-  }
+  };
 
   const gpuSuggestionClick = (value) => {
-    setGpu(value)
+    setGpu(value);
     setGpuSuggestions([]);
-  }
+  };
 
   const nameSuggestionClick = (value) => {
-    setName(value)
+    setName(value);
     setNameSuggestions([]);
+  };
 
+
+  const hideToggle = (e) => {
+    const element = e.target;
+    element.classList.toggle("hide");
   }
 
   return (
@@ -122,9 +131,16 @@ function SearchPanel() {
                 value={cpu}
               />
               <div className="suggestion-wrapper">
-                {cpuSuggestions.length !== 0 && cpuSuggestions.map((suggestion) => {
-                  return <SuggestionItem key={suggestion._id} value={suggestion.MODEL} clickHandle={cpuSuggestionClick} />
-                })}
+                {cpuSuggestions.length !== 0 &&
+                  cpuSuggestions.map((suggestion) => {
+                    return (
+                      <SuggestionItem
+                        key={suggestion._id}
+                        value={suggestion.MODEL}
+                        clickHandle={cpuSuggestionClick}
+                      />
+                    );
+                  })}
               </div>
             </div>
 
@@ -139,9 +155,16 @@ function SearchPanel() {
                 value={gpu}
               />
               <div className="suggestion-wrapper">
-                {gpuSuggestions.length !== 0 && gpuSuggestions.map((suggestion) => {
-                  return <SuggestionItem key={suggestion._id} value={suggestion.NAME} clickHandle={gpuSuggestionClick} />
-                })}
+                {gpuSuggestions.length !== 0 &&
+                  gpuSuggestions.map((suggestion) => {
+                    return (
+                      <SuggestionItem
+                        key={suggestion._id}
+                        value={suggestion.NAME}
+                        clickHandle={gpuSuggestionClick}
+                      />
+                    );
+                  })}
               </div>
             </div>
 
@@ -168,9 +191,16 @@ function SearchPanel() {
                 value={name}
               />
               <div className="suggestion-wrapper">
-                {nameSuggestions.length !== 0 && nameSuggestions.map((suggestion) => {
-                  return <SuggestionItem key={suggestion._id} value={suggestion.DETAILS.NAME} clickHandle={nameSuggestionClick} />
-                })}
+                {nameSuggestions.length !== 0 &&
+                  nameSuggestions.map((suggestion) => {
+                    return (
+                      <SuggestionItem
+                        key={suggestion._id}
+                        value={suggestion.DETAILS.NAME}
+                        clickHandle={nameSuggestionClick}
+                      />
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -181,24 +211,39 @@ function SearchPanel() {
           </div>
         </span>
       </div>
+      <div className="" id="filter-container">
+        <select id="filter" className="option-container panel forty-five">
+          <option value="">UNFILTERED</option>
+          <option value={1}>option one</option>
+          <option value={2}>option two</option>
+          <option value={3}>option three</option>
+          <option value={4}>option four</option>
+          <option value={5}>option five</option></select>
+
+        <select id="sort" className="option-container panel forty-five">
+          <option value="">UNSORTED</option>
+          <option value={"NAME"}>NAME</option>
+          <option value={"DEVELOPER"}>DEVELOPER</option>
+          <option value={"YEAR"}>YEAR</option>
+        </select>
+      </div>
       <div className="panel ninety" id="results-panel">
-        {
-          games.map((game) => {
-            return (
-              <ResultCard
-                key={game._id}
-                id={game._id}
-                name={game.DETAILS.NAME}
-                dev={game.DETAILS.DEVELOPER}
-                year={game.DETAILS.RELEASE_YEAR}
-                genres={game.DETAILS.GENRES}
-                cpu={game.SYSTEM_REQUIREMENTS.PROCESSORS}
-                gpu={game.SYSTEM_REQUIREMENTS.GRAPHICS}
-                memory={game.SYSTEM_REQUIREMENTS.MEMORY}
-              />
-            );
-          })
-        }
+        {games.map((game, index) => {
+          return (
+            <ResultCard
+              key={game._id}
+              id={game._id}
+              name={game.DETAILS.NAME}
+              dev={game.DETAILS.DEVELOPER}
+              year={game.DETAILS.RELEASE_YEAR}
+              genres={game.DETAILS.GENRES}
+              cpu={game.SYSTEM_REQUIREMENTS.PROCESSORS}
+              gpu={game.SYSTEM_REQUIREMENTS.GRAPHICS}
+              memory={game.SYSTEM_REQUIREMENTS.MEMORY}
+              index={index}
+            />
+          );
+        })}
       </div>
     </div>
   );
