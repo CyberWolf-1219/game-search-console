@@ -5,7 +5,7 @@
   margin-top: 50px;
   padding: 2em;
   opacity: 0;
-  animation: fade-drop-in 1s 0.5s ease-in forwards;
+  animation: fade-drop-in 1s 0.5s linear forwards;
 }
 
 #search-console {
@@ -133,15 +133,55 @@
   min-height: 200px;
   padding: 2em 2em 1em 2em;
   z-index: 1;
+  overflow: hidden;
+}
+
+#page-btn-container {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  gap: 10em;
+}
+
+#page-btn-container .page-btn {
+  background-color: var(--secondary-color);
+  border-radius: 10px;
+  padding: 1em;
+  width: 10em;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
 }
 
 @keyframes fade-drop-in {
   0% {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateX(-10px);
   }
   100% {
     opacity: 100;
-    transform: none;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fade-slide-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 100;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes fade-slide-right {
+  0% {
+    opacity: 0;
+    transform: translateX(+10px);
+  }
+  100% {
+    opacity: 100;
+    transform: translateX(0px);
   }
 }

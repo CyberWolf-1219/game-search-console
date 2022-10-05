@@ -1,5 +1,5 @@
 * {
-  transition: all 0.5s;
+  transition: all 0.25s;
 }
 
 .result-card {
@@ -12,12 +12,7 @@
   padding: 1em;
   margin-bottom: 1em;
   opacity: 0;
-  animation: fade-drop-in 1s 0.5s forwards;
-  /* transition: all 1s; */
-}
-
-.result-card:hover {
-  transform: scale(1.1);
+  animation: fade-slide-left 0.25s forwards;
 }
 
 .result-card img {
@@ -88,5 +83,16 @@
   100% {
     opacity: 100;
     transform: none;
+  }
+}
+
+@keyframes fade-slide-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-800px);
+  }
+  100% {
+    opacity: 100;
+    transform: translateX(0px);
   }
 }

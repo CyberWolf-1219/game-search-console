@@ -27,6 +27,7 @@
 
 .panel {
   background-color: rgba(5, 4, 92, 0.39);
+  border-radius: 10px;
 }
 
 .panel.thirty {

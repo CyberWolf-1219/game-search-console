@@ -1,6 +1,6 @@
 import "./resultcard.css";
 
-function ResultCard({ name, dev, year, genres, cpu, gpu, memory, id, index }) {
+function ResultCard({ name, dev, year, genres, cpu, gpu, memory, id, index, imgSrc }) {
   const changeDescriptionPanel = (e) => {
     const cardId = e.target.getAttribute("data-card-id");
     const resultCard = document.getElementById(cardId);
@@ -17,8 +17,8 @@ function ResultCard({ name, dev, year, genres, cpu, gpu, memory, id, index }) {
   };
 
   return (
-    <div className="panel result-card" id={id} style={{ animationDelay: `${index * 0.25}s` }} >
-      <img src="" alt="" />
+    <div className="panel result-card" id={id} style={{ animationDelay: `${index * 0.1}s` }} >
+      <img src={imgSrc} alt="" />
       <span id="description">
         <div id="header">
           <span

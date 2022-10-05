@@ -1,16 +1,21 @@
 import "./search_panel.css";
 import { ResultCard, API_URL, SuggestionItem } from "./../../resources";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function SearchPanel() {
-  const [ cpu, setCpu ] = useState("");
-  const [ gpu, setGpu ] = useState("");
-  const [ memory, setMemory ] = useState("");
-  const [ name, setName ] = useState("");
-  const [ games, setGames ] = useState([]);
-  const [ cpuSuggestions, setCpuSuggestions ] = useState([]);
-  const [ gpuSuggestions, setGpuSuggestions ] = useState([]);
-  const [ nameSuggestions, setNameSuggestions ] = useState([]);
+  const [cpu, setCpu] = useState("");
+  const [gpu, setGpu] = useState("");
+  const [memory, setMemory] = useState("");
+  const [name, setName] = useState("");
+  const [games, setGames] = useState([]);
+  const [cpuSuggestions, setCpuSuggestions] = useState([]);
+  const [gpuSuggestions, setGpuSuggestions] = useState([]);
+  const [nameSuggestions, setNameSuggestions] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+
+  useEffect(() => {
+    search();
+  }, [pageNumber]);
 
   // SEARCH FUNCTION
   const search = () => {
@@ -19,9 +24,9 @@ function SearchPanel() {
       gpu: document.getElementById("gpu-input").value,
       memory: document.getElementById("memory-input").value,
       name: document.getElementById("name-input").value,
-      sorting: document.getElementById("sort").value
+      sorting: document.getElementById("sort").value,
+      pageNumber: pageNumber,
     };
-
     setGames([]);
 
     fetch(API_URL + "/search", {
@@ -109,11 +114,11 @@ function SearchPanel() {
     setNameSuggestions([]);
   };
 
-
-  const hideToggle = (e) => {
-    const element = e.target;
-    element.classList.toggle("hide");
-  }
+  // MISC FUNCS
+  // const hideToggle = (e) => {
+  //   const element = e.target;
+  //   element.classList.toggle("hide");
+  // }
 
   return (
     <div id="search-panel" className="panel thirty">
@@ -218,7 +223,8 @@ function SearchPanel() {
           <option value={2}>option two</option>
           <option value={3}>option three</option>
           <option value={4}>option four</option>
-          <option value={5}>option five</option></select>
+          <option value={5}>option five</option>
+        </select>
 
         <select id="sort" className="option-container panel forty-five">
           <option value="">UNSORTED</option>
@@ -231,7 +237,7 @@ function SearchPanel() {
         {games.map((game, index) => {
           return (
             <ResultCard
-              key={game._id}
+              key={index}
               id={game._id}
               name={game.DETAILS.NAME}
               dev={game.DETAILS.DEVELOPER}
@@ -241,9 +247,33 @@ function SearchPanel() {
               gpu={game.SYSTEM_REQUIREMENTS.GRAPHICS}
               memory={game.SYSTEM_REQUIREMENTS.MEMORY}
               index={index}
+              imgSrc={game.DETAILS.IMG}
             />
           );
         })}
+      </div>
+      <div id="page-btn-container">
+        <span
+          className="page-btn"
+          id="left-page"
+          onClick={() => {
+            setPageNumber(pageNumber - (pageNumber === 0 ? 0 : 1));
+          }}
+        >
+          ◀ PREVIOUS
+        </span>
+        <span className="page-btn" id="page-number-display">
+          {pageNumber + 1}
+        </span>
+        <span
+          className="page-btn"
+          id="right-page"
+          onClick={() => {
+            setPageNumber(pageNumber + 1);
+          }}
+        >
+          NEXT ▶
+        </span>
       </div>
     </div>
   );
